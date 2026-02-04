@@ -161,6 +161,7 @@ async def next_step_auto(message: Message, state: FSMContext):
     # Automatically treat user message as task result
     await state.update_data(task_result=message.text)
     await message.answer("Спасибо 💛 Я передал это тьютору.", reply_markup=emotions_kb())
+    await state.set_state(Flow.choosing_emotion)
 
     data = await state.get_data()
     photo_id = message.photo[-1].file_id if message.photo else None
