@@ -156,14 +156,30 @@ async def comment(message: Message, state: FSMContext):
     )
     await state.set_state(Flow.doing_task)
 
-@dp.message(F.text == "➡️ Следующее: задание")
-async def next_step(message: Message, state: FSMContext):
-    await message.answer(
-        "Отправь результат задания.\n"
-        "Можно текст, фото или текст + фото 📸",
-        reply_markup=send_kb()
+@dp.message(Flow.doing_task)
+async def next_step_auto(message: Message, state: FSMContext):
+    # Automatically treat user message as task result
+    await state.update_data(task_result=message.text)
+    await message.answer("Спасибо 💛 Я передал это тьютору.", reply_markup=emotions_kb())
+
+    data = await state.get_data()
+    photo_id = message.photo[-1].file_id if message.photo else None
+
+    # Send to tutor
+    await bot.send_message(
+        TUTOR_CHAT_ID,
+        f"🧠 EmoJourney\n"
+        f"User ID: {message.from_user.id}\n"
+        f"Эмоция: {data['emotion']}\n"
+        f"Комментарий: {data['comment']}\n"
+        f"Результат:\n{data['task_result'] or '—'}"
     )
-    await state.set_state(Flow.sending_to_tutor)
+    if photo_id:
+        await bot.send_photo(TUTOR_CHAT_ID, photo_id)
+
+    # Reset to choosing emotion
+    await state.set_state(Flow.choosing_emotion)
+
 
 @dp.message(Flow.sending_to_tutor)
 async def send_to_tutor(message: Message, state: FSMContext):
