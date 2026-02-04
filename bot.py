@@ -163,6 +163,8 @@ async def next_step_auto(message: Message, state: FSMContext):
     await message.answer("Спасибо 💛 Я передал это тьютору.", reply_markup=emotions_kb())
     await state.set_state(Flow.choosing_emotion)
 
+    await message.answer("Хотите выбрать другую эмоцию или что-то еще обсудить? 🌱")
+
     data = await state.get_data()
     photo_id = message.photo[-1].file_id if message.photo else None
 
