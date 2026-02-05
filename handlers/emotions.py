@@ -39,10 +39,27 @@ def register_emotions_handlers(dp, bot):
 
     @dp.message(Flow.doing_task)
     async def receive_task_result(message: Message, state: FSMContext):
+        user_id = message.from_user.id
+        user_name = message.from_user.first_name or "Пользователь"
         text = message.text or message.caption
         photo_id = message.photo[-1].file_id if message.photo else None
 
         await state.update_data(task_result=text, photo_id=photo_id)
+
+        data = await state.get_data()
+
+        for tutor_id in TUTOR_CHAT_ID:
+            await bot.send_message(
+                tutor_id,
+                f"🧠 EmoJourney\n"
+                f"Пользователь: {user_name} (ID: {user_id})\n"
+                f"Эмоция: {data.get('emotion')}\n"
+                f"Комментарий: {data.get('comment')}\n"
+                f"Результат:\n{data.get('task_result') or '—'}"
+            )
+
+        if photo_id:
+            await bot.send_photo(TUTOR_CHAT_ID, photo_id)
 
         await message.answer(
             "Спасибо 💛 Я передал это тьютору.\n\n"

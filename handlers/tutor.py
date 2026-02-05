@@ -1,4 +1,3 @@
-# handlers/tutor.py
 from aiogram import F
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext

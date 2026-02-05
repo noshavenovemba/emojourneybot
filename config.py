@@ -4,7 +4,7 @@
 # BOT CONFIG
 # =========================
 BOT_TOKEN = "8581408814:AAH7tKWRf2HxaY1XcjMWg69gl6eDnOSAapw"
-TUTOR_CHAT_ID = 160355067
+TUTOR_CHAT_ID = [160355067, 221452319]
 DB_NAME = "emojourney.db"
 
 # =========================

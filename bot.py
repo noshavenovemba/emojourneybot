@@ -8,7 +8,6 @@ dp = Dispatcher()
 
 from handlers import start, emotions, after_task, tutor, misc
 
-# регистрируем хэндлеры
 start.register_start_handlers(dp, bot)
 emotions.register_emotions_handlers(dp, bot)
 after_task.register_after_task_handlers(dp, bot)

@@ -15,6 +15,7 @@ def register_after_task_handlers(dp, bot):  # <- добавили bot как а�
         )
         await state.set_state(Flow.choosing_emotion)
 
+
     @dp.message(Flow.after_task, F.text == "🚪 Нет, закончить")
     async def after_task_quit(message: Message, state: FSMContext):
         await state.clear()

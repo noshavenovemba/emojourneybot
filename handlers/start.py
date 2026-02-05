@@ -38,9 +38,12 @@ def register_start_handlers(dp, bot):
     from aiogram.filters import Command
     @dp.message(Command("start"))
     async def start_command(message: Message, state: FSMContext):
+        username = message.from_user.first_name or "друг"
         await state.clear()
         await message.answer(
-            "Привет 👋\nЯ EmoJourney 🌱\nЧто хочешь сделать?",
-            reply_markup=start_menu_kb()
+            f"Привет, {username}! 👋\n"
+            "Я EmoJourney 🌱\n\n"
+            "Что ты хочешь сделать?",
+            reply_markup=start_menu_kb()  # клавиатура с кнопками "Начать", "О боте", "Выйти"
         )
         await state.set_state(Flow.start_menu)

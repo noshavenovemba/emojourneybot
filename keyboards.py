@@ -34,7 +34,11 @@ def start_menu_kb():
         keyboard=[
             [KeyboardButton(text="▶️ Начать")],
             [KeyboardButton(text="🌱 О боте")],
-            [KeyboardButton(text="🚪 Выйти")]
+            [KeyboardButton(text="🚪 Выйти")],
+            [KeyboardButton(text="📚 Мои тьюториалы")], 
+            [KeyboardButton(text="📈 Динамика эмоций")],
+            [KeyboardButton(text="💡 Советы и практики")], 
+            [KeyboardButton(text="⚙️ Профиль / Настройки")]
         ],
         resize_keyboard=True
     )
